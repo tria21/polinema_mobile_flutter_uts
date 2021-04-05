@@ -74,7 +74,7 @@ class KategoriEntryFormState extends State<KategoriEntryForm> {
                           // ubah data
                           kategoriItem.name = nameController.text;
                         }
-                        // kembali ke layar sebelumnya dengan membawa objek item
+                        // kembali ke layar sebelumnya dengan membawa objek kategori
                         Navigator.pop(context, kategoriItem);
                       },
                     ),

@@ -25,7 +25,7 @@ class DbHelper {
   // untuk membuat tabel pada database
   void _createDb(Database db, int version) async {
     var batchTemp = db.batch();
-    // tabel kategoriId
+    // tabel kategoriItem
     await batchTemp.execute('''CREATE TABLE kategoriItem (
           id INTEGER PRIMARY KEY AUTOINCREMENT,
           name TEXT)''');

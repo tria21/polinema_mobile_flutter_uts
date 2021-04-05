@@ -1,23 +1,23 @@
-import 'package:tugas_uts/bookform.dart';
+import 'package:tugas_uts/kategoriform.dart';
 import 'package:tugas_uts/dbhelper.dart';
-import 'package:tugas_uts/bookItem.dart';
+import 'package:tugas_uts/kategoriItem.dart';
+import 'package:tugas_uts/book.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:sqflite/sqflite.dart';
 
-class Book extends StatefulWidget {
-  
+class Kategori extends StatefulWidget {
   @override
-  BookState createState() => BookState();
+  KategoriState createState() => KategoriState();
 }
 
-class BookState extends State<Book> {
+class KategoriState extends State<Kategori> {
   DbHelper dbHelper = DbHelper();
   int count = 0;
-  List<BookItem> itemList;
+  List<KategoriItem> itemList;
 
   @override
-  // untuk menampilkan data yang sudah diinputkan ketika pertama kali membuka apk
+  // untuk menampilkan data yang sudah diinputkan ketika pertama kali apk dibuka
   void initState() {
     super.initState();
     updateListView();
@@ -26,11 +26,11 @@ class BookState extends State<Book> {
   @override
   Widget build(BuildContext context) {
     if (itemList == null) {
-      itemList = List<BookItem>();
+      itemList = List<KategoriItem>();
     }
     return Scaffold(
       appBar: AppBar(
-        title: Text('Book'),
+        title: Text('Kategori'),
       ),
       body: Column(
         children: [
@@ -41,12 +41,12 @@ class BookState extends State<Book> {
       ),
       floatingActionButton: FloatingActionButton(
         child: Icon(Icons.add),
-        tooltip: 'Add Book',
+        tooltip: 'Add Kategori',
         onPressed: () async {
           var item = await navigateToEntryForm(context, null);
           if (item != null) {
             //TODO 2 Panggil Fungsi untuk Insert ke DB
-            int result = await dbHelper.insertBookItem(item);
+            int result = await dbHelper.insertKategoriItem(item);
             if (result > 0) {
               updateListView();
             }
@@ -56,13 +56,13 @@ class BookState extends State<Book> {
     );
   }
 
-  Future<BookItem> navigateToEntryForm(
-      BuildContext context, BookItem bookItem) async {
+  Future<KategoriItem> navigateToEntryForm(
+      BuildContext context, KategoriItem kategoriItem) async {
     var result = await Navigator.push(
       context,
       MaterialPageRoute(
         builder: (BuildContext context) {
-          return BookEntryForm(bookItem);
+          return KategoriEntryForm(kategoriItem);
         },
       ),
     );
@@ -79,16 +79,16 @@ class BookState extends State<Book> {
           elevation: 2.0,
           margin: EdgeInsets.all(8),
           child: ListTile(
-            // widget yang akan ditampilkan disebelah kiri title
+            // widget yang akan menampilkan sebelum title
             leading: CircleAvatar(
               backgroundColor: Colors.black,
-              child: Icon(Icons.auto_stories), //menampilkan icon buku
+              child: Icon(Icons.category), //digunakan untuk menampilkan icon kategori
             ),
             title: Text(
-              this.itemList[index].title,
+              this.itemList[index].name,
               style: textStyle,
             ),
-            // widget yang akan ditampilkan setelah title/disebelah kanan title
+            // widget yang akan menampilkan setelah title
             trailing: Row(
               mainAxisSize: MainAxisSize.min,
               children: [
@@ -110,6 +110,13 @@ class BookState extends State<Book> {
                 ),
               ],
             ),
+            onTap: () async {
+              // Navigator.pushNamed(context, '/item');
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => Book()),
+              );
+            },
           ),
         );
       },
@@ -117,16 +124,16 @@ class BookState extends State<Book> {
   }
 
   //delete Item
-  void deleteItem(BookItem object) async {
-    int result = await dbHelper.deleteBookItem(object.id);
+  void deleteItem(KategoriItem object) async {
+    int result = await dbHelper.deleteKategoriItem(object.id);
     if (result > 0) {
       updateListView();
     }
   }
 
   //edit data
-  void editItem(BookItem object) async {
-    int result = await dbHelper.updateBookItem(object);
+  void editItem(KategoriItem object) async {
+    int result = await dbHelper.updateKategoriItem(object);
     if (result > 0) {
       updateListView();
     }
@@ -137,7 +144,7 @@ class BookState extends State<Book> {
     final Future<Database> dbFuture = dbHelper.initDb();
     dbFuture.then((database) {
       //TODO 1 Select data dari DB
-      Future<List<BookItem>> itemListFuture = dbHelper.getBookItemList();
+      Future<List<KategoriItem>> itemListFuture = dbHelper.getKategoriItemList();
       itemListFuture.then((itemList) {
         setState(() {
           this.itemList = itemList;

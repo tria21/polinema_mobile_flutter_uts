@@ -39,14 +39,14 @@ class BookEntryFormState extends State<BookEntryForm> {
         padding: EdgeInsets.only(top: 15.0, left: 10.0, right: 10.0),
         child: ListView(
           children: <Widget>[
-            //title
+            //bookName
             Padding(
               padding: EdgeInsets.only(top: 20.0, bottom: 20.0),
               child: TextField(
                 controller: titleController,
                 keyboardType: TextInputType.text,
                 decoration: InputDecoration(
-                  labelText: 'Title',
+                  labelText: 'Book Title',
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(5.0),
                   ),
@@ -70,7 +70,7 @@ class BookEntryFormState extends State<BookEntryForm> {
               ),
             ),
             //desc
-             Padding(
+            Padding(
               padding: EdgeInsets.only(top: 20.0, bottom: 20.0),
               child: TextField(
                 controller: descController,
@@ -112,7 +112,7 @@ class BookEntryFormState extends State<BookEntryForm> {
                           bookItem.author = authorController.text;
                           bookItem.desc = descController.text;
                         }
-                        // kembali ke layar sebelumnya dengan membawa objek item
+                        // kembali ke layar sebelumnya dengan membawa objek book
                         Navigator.pop(context, bookItem);
                       },
                     ),

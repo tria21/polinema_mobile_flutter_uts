@@ -1,7 +1,7 @@
 import 'dart:io';
+import 'dart:async';
 import 'package:tugas_uts/bookItem.dart';
 import 'package:tugas_uts/kategoriItem.dart';
-import 'dart:async';
 import 'package:path_provider/path_provider.dart';
 import 'package:sqflite/sqflite.dart';
 
@@ -11,7 +11,7 @@ class DbHelper {
   DbHelper._createObject();
 
   Future<Database> initDb() async {
-    //untuk menentukan nama database dan lokasi yg dibuat
+    //menentukan nama database dan lokasi yg dibuat
     Directory directory = await getApplicationDocumentsDirectory();
     String path = directory.path + 'daftarBuku.db';
 
@@ -64,7 +64,7 @@ class DbHelper {
   // insert data tabel bookItem
   Future<int> insertBookItem(BookItem object) async {
     Database db = await this.initDb();
-    int count = await db.insert('BookItem', object.toMap());
+    int count = await db.insert('bookItem', object.toMap());
     return count;
   }
 

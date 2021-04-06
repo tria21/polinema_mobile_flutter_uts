@@ -40,5 +40,6 @@ class BookItem{
     map['title'] = title;
     map['author'] = author;
     map['desc'] = desc;
+    return map;
   }
 }

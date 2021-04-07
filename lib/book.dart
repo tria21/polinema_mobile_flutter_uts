@@ -25,9 +25,6 @@ class BookState extends State<Book> {
 
   @override
   Widget build(BuildContext context) {
-    if (itemList == null) {
-      itemList = List<BookItem>();
-    }
     return Scaffold(
       appBar: AppBar(
         title: Text('Book'), //title pada appBar
@@ -87,6 +84,10 @@ class BookState extends State<Book> {
             title: Text(
               this.itemList[index].title, //digunakan untuk menampilkan title di list
               style: textStyle,
+            ),
+            subtitle: Text(
+              this.itemList[index].kategoriName,
+              style: TextStyle(fontSize: 15, fontWeight: FontWeight.w700),
             ),
             // widget yang akan ditampilkan setelah title/disebelah kanan title
             trailing: Row(

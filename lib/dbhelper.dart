@@ -25,19 +25,20 @@ class DbHelper {
   // untuk membuat tabel pada database
   void _createDb(Database db, int version) async {
     var batchTemp = db.batch();
+    batchTemp.execute('DROP TABLE IF EXISTS kategoriItem');
+    batchTemp.execute('DROP TABLE IF EXISTS bookItem');
     //membuat tabel kategoriItem
-    await batchTemp.execute('''CREATE TABLE kategoriItem (
+    batchTemp.execute('''CREATE TABLE kategoriItem (
           id INTEGER PRIMARY KEY AUTOINCREMENT,
           name TEXT)''');
     //membuat tabel bookItem
-    await batchTemp.execute('''CREATE TABLE bookItem(
+    batchTemp.execute('''CREATE TABLE bookItem(
           id INTEGER PRIMARY KEY AUTOINCREMENT, 
           title TEXT, 
           author TEXT,
           desc TEXT,
-          kategoriId INTEGER, 
-          FOREIGN KEY (kategoriId) REFERENCES kategoriItem(id))''');
-    batchTemp.commit();
+          kategoriName TEXT)''');
+    await batchTemp.commit();
   }
 
   //select data tabel kategoriItem

@@ -1,4 +1,7 @@
+import 'package:tugas_uts/dbhelper.dart';
 import 'package:tugas_uts/bookItem.dart';
+import 'package:tugas_uts/kategoriItem.dart';
+import 'package:sqflite/sqflite.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -11,10 +14,38 @@ class BookEntryForm extends StatefulWidget {
 
 class BookEntryFormState extends State<BookEntryForm> {
   BookItem bookItem;
+  KategoriItem kategoriItem;
+  DbHelper dbHelper = DbHelper();
   BookEntryFormState(this.bookItem);
   TextEditingController titleController = TextEditingController();
   TextEditingController authorController = TextEditingController();
   TextEditingController descController = TextEditingController();
+
+  List<KategoriItem> kategoriList = List<KategoriItem>();
+  List<String> listKategori = List<String>();
+
+  int indexList = 0;
+
+  @override
+  void initState(){
+    super.initState();
+    updateListView();
+  }
+
+  void updateListView(){
+    final Future<Database> dbFuture = dbHelper.initDb();
+    dbFuture.then((database){
+      //TODO 1 Select data dari DB
+      Future<List<KategoriItem>> kategoriListFuture = dbHelper.getKategoriItemList();
+      kategoriListFuture.then((kategoriList){
+        setState((){
+          for(int i=0; i< kategoriList.length; i++) {
+            listKategori.add(kategoriList[i].name);
+          }
+        });
+      });
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -84,6 +115,31 @@ class BookEntryFormState extends State<BookEntryForm> {
                 onChanged: (value) {},
               ),
             ),
+            //kategoriName form
+            Padding(
+              padding: EdgeInsets.only(top: 20.0, bottom: 20.0),
+              child: DropdownButtonFormField<String>(
+                decoration: InputDecoration(
+                  labelText: 'Select Kategori',
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(5.0),
+                  ),
+                ),
+                value: listKategori[indexList],
+                items: listKategori.map((String value) {
+                  return DropdownMenuItem<String>(
+                    value: value,
+                    child: Text(value),
+                  );
+                }).toList(),
+                onChanged: (String value) {
+                  int i = listKategori.indexOf(value);
+                  setState(() {
+                    indexList = i;
+                  });
+                },
+              ),
+            ),
             // button
             Padding(
               padding: EdgeInsets.only(top: 20.0, bottom: 20.0),
@@ -105,12 +161,14 @@ class BookEntryFormState extends State<BookEntryForm> {
                             titleController.text,
                             authorController.text,
                             descController.text,
+                            listKategori[indexList].toString(),
                           );
                         } else {
                           // ubah data
                           bookItem.title = titleController.text;
                           bookItem.author = authorController.text;
                           bookItem.desc = descController.text;
+                          bookItem.kategoriName = listKategori[indexList].toString();
                         }
                         // kembali ke layar sebelumnya dengan membawa objek book
                         Navigator.pop(context, bookItem);

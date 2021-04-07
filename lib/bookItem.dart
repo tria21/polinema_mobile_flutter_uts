@@ -1,4 +1,5 @@
 class BookItem{
+  //instansiasi atribut yang dibutuhkan
   int _id;
   int _kategoriId;
   String _title;
@@ -40,6 +41,6 @@ class BookItem{
     map['title'] = title;
     map['author'] = author;
     map['desc'] = desc;
-    return map;
+    return map; //digunakan untuk menampilkan item buku di list
   }
 }

@@ -25,7 +25,7 @@ class KategoriEntryFormState extends State<KategoriEntryForm> {
       appBar: AppBar(
         title: kategoriItem == null ? Text('Tambah') : Text('Ubah'),
         leading: new IconButton(
-          icon: new Icon(Icons.arrow_back),
+          icon: new Icon(Icons.arrow_back), //icon back
           onPressed: () {
             Navigator.pop(context);
           },
@@ -35,7 +35,7 @@ class KategoriEntryFormState extends State<KategoriEntryForm> {
         padding: EdgeInsets.only(top: 15.0, left: 10.0, right: 10.0),
         child: ListView(
           children: <Widget>[
-            //kategoriName
+            //kategoriName form
             Padding(
               padding: EdgeInsets.only(top: 20.0, bottom: 20.0),
               child: TextField(

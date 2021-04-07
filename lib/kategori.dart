@@ -30,12 +30,12 @@ class KategoriState extends State<Kategori> {
     }
     return Scaffold(
       appBar: AppBar(
-        title: Text('Kategori'),
+        title: Text('Kategori'), //title pada appbar
       ),
       body: Column(
         children: [
           Expanded(
-            child: createListView(),
+            child: createListView(), //memanggil fungsi createlist
           ),
         ],
       ),
@@ -43,12 +43,12 @@ class KategoriState extends State<Kategori> {
         child: Icon(Icons.add),
         tooltip: 'Add Kategori',
         onPressed: () async {
-          var item = await navigateToEntryForm(context, null);
+          var item = await navigateToEntryForm(context, null); //memanggil fungsi navigate form
           if (item != null) {
             //TODO 2 Panggil Fungsi untuk Insert ke DB
-            int result = await dbHelper.insertKategoriItem(item);
+            int result = await dbHelper.insertKategoriItem(item); //memanggil fungsi insert
             if (result > 0) {
-              updateListView();
+              updateListView(); //memanggil fungsi update list
             }
           }
         },
@@ -56,7 +56,7 @@ class KategoriState extends State<Kategori> {
     );
   }
 
-  Future<KategoriItem> navigateToEntryForm(
+  Future<KategoriItem> navigateToEntryForm( //digunakan untuk push data
       BuildContext context, KategoriItem kategoriItem) async {
     var result = await Navigator.push(
       context,
@@ -69,7 +69,7 @@ class KategoriState extends State<Kategori> {
     return result;
   }
 
-  ListView createListView() {
+  ListView createListView() { //digunakan untuk membuat list
     TextStyle textStyle = Theme.of(context).textTheme.headline5;
     return ListView.builder(
       itemCount: count,
@@ -93,19 +93,19 @@ class KategoriState extends State<Kategori> {
               mainAxisSize: MainAxisSize.min,
               children: [
                 IconButton(
-                  icon: Icon(Icons.edit),
+                  icon: Icon(Icons.edit), //icon edit
                   onPressed: () async {
                     var item = await navigateToEntryForm(
                         context, this.itemList[index]);
                     //TODO 4 Panggil Fungsi untuk Edit data
-                    if (item != null) editItem(item);
+                    if (item != null) editItem(item); //memanggil fungsi edit data
                   },
                 ),
                 IconButton(
-                  icon: Icon(Icons.delete),
+                  icon: Icon(Icons.delete), //icon delete
                   onPressed: () async {
                     //TODO 3 Panggil Fungsi untuk Delete dari DB berdasarkan Item
-                    deleteItem(itemList[index]);
+                    deleteItem(itemList[index]); //memanggil fungsi delete
                   },
                 ),
               ],
@@ -124,7 +124,7 @@ class KategoriState extends State<Kategori> {
   }
 
   //delete Item
-  void deleteItem(KategoriItem object) async {
+  void deleteItem(KategoriItem object) async { //digunakan untuk delete item
     int result = await dbHelper.deleteKategoriItem(object.id);
     if (result > 0) {
       updateListView();
@@ -132,7 +132,7 @@ class KategoriState extends State<Kategori> {
   }
 
   //edit data
-  void editItem(KategoriItem object) async {
+  void editItem(KategoriItem object) async { //digunakan untuk edit item
     int result = await dbHelper.updateKategoriItem(object);
     if (result > 0) {
       updateListView();
@@ -140,7 +140,7 @@ class KategoriState extends State<Kategori> {
   }
 
   //update List item
-  void updateListView() {
+  void updateListView() { //digunakan untuk update list ketika ada perubahan data
     final Future<Database> dbFuture = dbHelper.initDb();
     dbFuture.then((database) {
       //TODO 1 Select data dari DB

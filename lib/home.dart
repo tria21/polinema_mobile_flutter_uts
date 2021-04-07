@@ -8,7 +8,7 @@ class Home extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Home'),
+        title: Text('Home'), //title pada appbar
       ),
       body: Row(
         mainAxisAlignment: MainAxisAlignment.center,

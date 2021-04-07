@@ -1,5 +1,5 @@
 class KategoriItem{
-  //menginstansiasi atribut yang ada
+  //menginstansiasi atribut yang dibutuhkan
   int _id;
   String _name;
 
@@ -23,6 +23,6 @@ class KategoriItem{
     Map<String, dynamic> map = Map<String, dynamic>();
     map['id'] = this._id;
     map['name'] = name;
-    return map;
+    return map; //digunakan untuk menampilkan item kategori di list
   }
 }

@@ -29,7 +29,7 @@ class BookEntryFormState extends State<BookEntryForm> {
       appBar: AppBar(
         title: bookItem == null ? Text('Tambah') : Text('Ubah'),
         leading: new IconButton(
-          icon: new Icon(Icons.arrow_back),
+          icon: new Icon(Icons.arrow_back), //icon back
           onPressed: () {
             Navigator.pop(context);
           },
@@ -39,7 +39,7 @@ class BookEntryFormState extends State<BookEntryForm> {
         padding: EdgeInsets.only(top: 15.0, left: 10.0, right: 10.0),
         child: ListView(
           children: <Widget>[
-            //bookName
+            //bookName form
             Padding(
               padding: EdgeInsets.only(top: 20.0, bottom: 20.0),
               child: TextField(
@@ -54,7 +54,7 @@ class BookEntryFormState extends State<BookEntryForm> {
                 onChanged: (value) {},
               ),
             ),
-            //author
+            //author form
             Padding(
               padding: EdgeInsets.only(top: 20.0, bottom: 20.0),
               child: TextField(
@@ -69,7 +69,7 @@ class BookEntryFormState extends State<BookEntryForm> {
                 onChanged: (value) {},
               ),
             ),
-            //desc
+            //desc form
             Padding(
               padding: EdgeInsets.only(top: 20.0, bottom: 20.0),
               child: TextField(

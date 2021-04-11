@@ -21,8 +21,8 @@ class BookEntryFormState extends State<BookEntryForm> {
   TextEditingController authorController = TextEditingController();
   TextEditingController descController = TextEditingController();
 
-  List<KategoriItem> kategoriList = List<KategoriItem>();
-  List<String> listKategori = List<String>();
+  List<KategoriItem> kategoriList = List<KategoriItem>(); //digunakan untuk menampung data yang di inputkan di kategori
+  List<String> listKategori = List<String>(); //digunakan untuk merubah inputan menjadi string agar dapat di map
 
   int indexList = 0;
 
@@ -40,8 +40,8 @@ class BookEntryFormState extends State<BookEntryForm> {
       kategoriListFuture.then((kategoriList){
         setState((){
           for(int i=0; i< kategoriList.length; i++) {
-            listKategori.add(kategoriList[i].name);
-          }
+            listKategori.add(kategoriList[i].name); //digunakan untuk menambah data nama bertipe data kategori dan
+          }                                         //dirubah menjadi string agar bisa ditampilkan di dropdown
         });
       });
     });
@@ -125,8 +125,8 @@ class BookEntryFormState extends State<BookEntryForm> {
                     borderRadius: BorderRadius.circular(5.0),
                   ),
                 ),
-                value: listKategori[indexList],
-                items: listKategori.map((String value) {
+                value: listKategori[indexList], //digunakan untuk menampung data nama kategori
+                items: listKategori.map((String value) { //digunakan untuk menampilkan kategori yang dipilih
                   return DropdownMenuItem<String>(
                     value: value,
                     child: Text(value),

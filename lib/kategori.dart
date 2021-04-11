@@ -125,7 +125,7 @@ class KategoriState extends State<Kategori> {
 
   //delete Item
   void deleteItem(KategoriItem object) async { //digunakan untuk delete item
-    int result = await dbHelper.deleteKategoriItem(object.id);
+    int result = await dbHelper.deleteKategoriItem(object.id,object.name);
     if (result > 0) {
       updateListView();
     }

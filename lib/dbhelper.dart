@@ -17,9 +17,13 @@ class DbHelper {
 
     //create, read databases
     var daftarBukuDatabase =
-        openDatabase(path, version: 1, onCreate: _createDb);
+        openDatabase(path, version: 2, onCreate: _createDb, onUpgrade: _upgradeDb);
     //mengembalikan nilai object sebagai hasil dari fungsinya
     return daftarBukuDatabase;
+  }
+
+  void _upgradeDb(Database db, int oldVersion, int newVersion) async{
+    _createDb(db, newVersion);
   }
 
   // untuk membuat tabel pada database
@@ -86,9 +90,11 @@ class DbHelper {
   }
 
   //delete data tabel kategoriItem
-  Future<int> deleteKategoriItem(int id) async {
+  Future<int> deleteKategoriItem(int id, String kategoriName
+  ) async {
     Database db = await this.initDb();
     int count = await db.delete('kategoriItem', where: 'id=?', whereArgs: [id]);
+    int countBook = await db.delete('bookItem', where: 'kategoriName=?', whereArgs: [kategoriName]);
     return count;
   }
 
